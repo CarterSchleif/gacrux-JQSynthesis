@@ -32,6 +32,9 @@ $( document ).ready( function(){
       } // end match check loop
       displayMatches( matches );
     }); // end searchButton on click
+    $( '#matchesOut' ).on( 'click', '.addToCartButton', function(){
+      console.log( 'in matchesOut on click of .addToCartButton:', $( this ).data( 'description' ) );
+    }); // end matchesOut on click of .addToCartButton
 }); // end doc ready
 
 function displayInventory(){
@@ -63,7 +66,7 @@ function displayMatches( matchesArray ){
     for( var i=0; i< matchesArray.length; i++ ){
       var appendString = '<li>';
       appendString += matchesArray[ i ].description;
-      appendString += '</li>';
+      appendString += ' <button class="addToCartButton" data-description="ostrich">Add To Cart</button></li>';
       matchesOutput.append( appendString );
     } // end for
   } // matches found
