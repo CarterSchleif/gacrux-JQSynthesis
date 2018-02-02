@@ -1,5 +1,6 @@
 var cart = [];
 var inventory = [];
+var inventoryState = true;
 
 $( document ).ready( function(){
     $( '#addButton' ).on( 'click', function(){
@@ -19,6 +20,7 @@ $( document ).ready( function(){
       /// - disabled b/c annoying
       // alert( 'Added to inventory!' );
     }); //end addButton on click
+
     $( '#searchButton' ).on( 'click', function(){
       console.log( 'in searchButton on click' );
       var matches = [];
@@ -34,6 +36,12 @@ $( document ).ready( function(){
       displayMatches( matches );
     }); // end searchButton on click
 
+    $( '.toggleState' ).on( 'click', function(){
+      inventoryState = !inventoryState;
+      console.log( inventoryState );
+      updateUI();
+    }); // end toggleState on click
+
     $( '#matchesOut' ).on( 'click', '.addToCartButton', function(){
       console.log( 'in matchesOut on click of .addToCartButton:', $( this ).data( 'description' ) );
       for( var i=0; i<inventory.length; i++ ){
@@ -46,6 +54,8 @@ $( document ).ready( function(){
       } //end for
       updateCart();
     }); // end matchesOut on click of .addToCartButton
+
+    updateUI();
 }); // end doc ready
 
 function displayInventory(){
@@ -94,3 +104,16 @@ function updateCart(){
     outputElement.append( '<li>' + cart[ i ].description + '</li>')
   } // end for
 } // end updateCart
+
+function updateUI(){
+  if( inventoryState ){
+    $( '#addToInventory' ).show();
+    $( '#searchInventory' ).hide();
+    $( '#shoppingcart' ).hide();
+  } //end show inventory
+  else{
+    $( '#addToInventory' ).hide();
+    $( '#searchInventory' ).show();
+    $( '#shoppingcart' ).show();
+  } // end !inventoryState
+} // end updateUI
