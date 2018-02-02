@@ -1,3 +1,4 @@
+var cart = [];
 var inventory = [];
 
 $( document ).ready( function(){
@@ -32,8 +33,18 @@ $( document ).ready( function(){
       } // end match check loop
       displayMatches( matches );
     }); // end searchButton on click
+
     $( '#matchesOut' ).on( 'click', '.addToCartButton', function(){
       console.log( 'in matchesOut on click of .addToCartButton:', $( this ).data( 'description' ) );
+      for( var i=0; i<inventory.length; i++ ){
+        if( inventory[ i ].description === $( this ).data( 'description' ) ){
+          console.log( 'match found:', inventory[ i ] );
+          // splice item with this description from inventory
+          // push that item into the cart
+          cart.push( inventory.splice( i, 1 )[0] );
+        } //end match found
+      } //end for
+      updateCart();
     }); // end matchesOut on click of .addToCartButton
 }); // end doc ready
 
@@ -74,3 +85,12 @@ function displayMatches( matchesArray ){
     matchesOutput.append( '<li>NONE</li>' );
   } // no matches
 } // end displayMatches
+
+function updateCart(){
+  console.log( 'in updateCart' );
+  var outputElement = $( '#cartOut' );
+  outputElement.empty();
+  for( var i=0; i<cart.length; i++ ){
+    outputElement.append( '<li>' + cart[ i ].description + '</li>')
+  } // end for
+} // end updateCart
